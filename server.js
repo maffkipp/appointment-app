@@ -1,31 +1,42 @@
 // Dependencies
 const express = require('express');
-const next = require('next');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20');
+const cookieSession = require('cookie-session');
+require('dotenv').config();
+require('./services/passport');
+require('./models/user');
+
+mongoose.connect(process.env.MONGO_URI);
 
 // App setup
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const app = express();
+const port = process.env.PORT || 3000;
 
-// Nextjs instance
-app
-  .prepare()
-  .then(() => {
-    const server = express();
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
-    // App routes
-    server.get('*', (req, res) => {
-      return handle(req, res);
-    });
+app.use(passport.initialize());
+app.use(passport.session());
 
-    // App listen
-    server.listen(3000, err => {
-      if (err) throw err;
-      else console.log('App running on port 3000');
-    });
+// Server routes
+app.get('/', (req, res) => {
+  res.render('index.ejs');
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/'
   })
-  .catch(ex => {
-    console.error(ex.stack);
-    process.exit(1);
-  });
+);
+
+// App start
+app.listen(port, err => {
+  if (err) console.error(err);
+  else console.log(`app running on port ${port}!`);
+});

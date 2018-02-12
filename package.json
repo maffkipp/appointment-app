@@ -4,18 +4,16 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "nodemon server.js",
+    "start": "NODE_ENV=production nodemon server.js"
   },
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^5.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "mongoose": "^5.0.4",
-    "next": "^5.0.0",
     "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "passport-google-oauth20": "^1.0.0"
   }
 }

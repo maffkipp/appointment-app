@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const User = mongoose.model('users');
+const User = require('../models/user');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -18,9 +18,9 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new GoogleStrategy(
     {
-      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackUrl: '/auth/google/callback'
+      callbackURL: '/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({ googleId: profile.id });
