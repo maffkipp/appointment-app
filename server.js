@@ -1,37 +1,49 @@
 // Dependencies
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20');
-const cookieSession = require('cookie-session');
-require('dotenv').config();
-require('./services/passport');
-require('./models/user');
-
-mongoose.connect(process.env.MONGO_URI);
+const express = require("express");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20");
+const cookieSession = require("cookie-session");
+require("dotenv").config();
+require("./services/passport");
+require("./models/user");
 
 // App setup
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    secret: "secretKey"
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Server routes
-app.get('/', (req, res) => {
-  res.render('index.ejs');
+app.get("/", (req, res) => {
+  res.render("index.ejs", { user: req.user });
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 
 app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/'
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/"
   })
 );
 

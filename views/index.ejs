@@ -9,10 +9,17 @@
 </head>
 
 <body>
-  <h1>Hello There!</h1>
-  <form action="/auth/google" method="get">
-    <button type="submit">Login</button>
-  </form>
+  <% if (user) { %>
+    <h1>Hello, <%= user.name %></h1>
+    <form action="/logout" method="get">
+      <button type="submit">Logout</button>
+    </form>
+  <% } else { %>
+    <h1>Hello There!</h1>
+    <form action="/auth/google" method="get">
+      <button type="submit">Login</button>
+    </form>
+  <% } %>
 </body>
 
 </html>
