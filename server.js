@@ -29,23 +29,7 @@ app.get("/", (req, res) => {
   res.render("index.ejs", { user: req.user });
 });
 
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/"
-  })
-);
+require("./routes/authRoutes")(app);
 
 // App start
 app.listen(port, err => {
