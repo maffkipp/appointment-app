@@ -19,5 +19,6 @@ mongoose.connection.openUri(
 );
 
 module.exports = {
-  User: userModel.User
+  User: userModel.User,
+  Appointment: appointmentModel.Appointment
 };
