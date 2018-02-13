@@ -12,9 +12,8 @@ mongoose.Promise = global.Promise;
 mongoose.connection.openUri(
   process.env.MONGO_URI || process.env.DB_CONN,
   {},
-  (err, conn) => {
-    if (err) console.log(`Error connecting to MongoDB: ${err}`);
-    else console.log("Connected to MongoDB successfully!");
+  err => {
+    if (err) throw err;
   }
 );
 

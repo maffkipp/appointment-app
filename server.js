@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 require("./services/passport");
 require("./models/user");
@@ -24,12 +25,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.json());
+
 // Server routes
 app.get("/", (req, res) => {
   res.render("index.ejs", { user: req.user });
 });
 
 require("./routes/authRoutes")(app);
+require("./routes/twilioRoutes")(app);
 
 // App start
 app.listen(port, err => {
