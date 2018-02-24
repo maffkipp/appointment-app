@@ -1,16 +1,19 @@
 const { User, Appointment } = require("../models/index");
 
 module.exports = app => {
+  // gets list of appointments
   app.get("/appointments", async (req, res) => {
     const appointments = await Appointment.find();
     res.send(appointments);
   });
 
+  // get list of users
   app.get("/users", async (req, res) => {
     const users = await User.find();
     res.send(users);
   });
 
+  // adds new appointment to database
   app.post("/appointments", async (req, res) => {
     const name = req.body.name;
     const phoneNumber = req.body.phoneNumber;
