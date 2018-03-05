@@ -14,6 +14,7 @@
     <form action="/logout" method="get">
       <button type="submit">Logout</button>
     </form>
+    <% include ./partials/appointment-form %>
   <% } else { %>
     <h1>Hello There!</h1>
     <form action="/auth/google" method="get">

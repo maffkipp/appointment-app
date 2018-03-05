@@ -19,7 +19,7 @@ module.exports = app => {
     const phoneNumber = req.body.phoneNumber;
     const notification = req.body.notification;
     const timeZone = req.body.timeZone;
-    const time = req.body.time;
+    const time = req.body.date + req.body.time;
 
     const appointment = new Appointment({
       name: name,
