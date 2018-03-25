@@ -1,15 +1,43 @@
-<form action='/appointments' method='post'>
-    <label>Name</label><br>
-    <input name='name'><br>
-    <label>Phone Number</label><br>
-    <input name='phoneNumber'><br>
-    <label>Notification</label><br>
-    <input name='notification'><br>
-    <label>Time Zone</label><br>
-    <input name='timeZone'><br>
-    <label>Date</label><br>
-    <input name='date' type='date'><br>
-    <label>Time</label><br>
-    <input type='time' name='time'><br>
-    <button type='submit'>Submit</button>
+<form action='/appointments' method='post' class="appointment-form">
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter name" name="name">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Phone Number</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter phone number" name="phoneNumber">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Notification</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter notification" name="notification">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Time Zone</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter time zone" name="timeZone">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Date</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter date" name="date">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Time</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter time" name="time">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button class="button is-link">Submit</button>
+        </div>
+    </div>
 </form>
