@@ -27,6 +27,8 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
 // Server routes
 app.get("/", (req, res) => {
   res.render("index.ejs", { user: req.user });
