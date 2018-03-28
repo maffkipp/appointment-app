@@ -15,20 +15,22 @@ module.exports = app => {
 
   // adds new appointment to database
   app.post("/appointments", async (req, res) => {
-    const name = req.body.name;
-    const phoneNumber = req.body.phoneNumber;
-    const notification = req.body.notification;
-    const timeZone = req.body.timeZone;
-    const time = req.body.date + req.body.time;
-
     const appointment = new Appointment({
-      name: name,
-      phoneNumber: phoneNumber,
-      notification: notification,
-      timeZone: timeZone,
-      time: time
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      notification: req.body.notification,
+      timeZone: req.body.timeZone,
+      time: req.body.date + req.body.time
     });
     await appointment.save();
     res.redirect("/appointments");
+  });
+
+  // deletes appointment in db
+  app.delete("/appointments/:appointmentid", (req, res) => {
+    const appointmentId = req.params.appointmentid;
+    Appointment.deleteOne( { _id : appointmentId }, (err, data) => {
+      err ? res.status(500).send(err) : res.redirect("/appointments");
+    });
   });
 };
