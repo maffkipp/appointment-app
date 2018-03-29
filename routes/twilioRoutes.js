@@ -13,17 +13,30 @@ module.exports = app => {
     res.send(users);
   });
 
+  // gets all appointments for a specific user
+  app.get("/users/:userid", async (req, res) => {
+    const userId = req.params.userid;
+    const user = await User.findById( userId, (err, data) => {
+      if (err) console.error(err);
+      else return data;
+    });
+    res.send(user);
+  });
+
   // adds new appointment to database
   app.post("/appointments", async (req, res) => {
+    console.log(req.body.userid);
     const appointment = new Appointment({
       name: req.body.name,
       phoneNumber: req.body.phoneNumber,
       notification: req.body.notification,
       timeZone: req.body.timeZone,
-      time: req.body.date + req.body.time
+      user: req.body.userid
     });
-    await appointment.save();
-    res.redirect("/appointments");
+    await appointment.save(err => {
+      if (err) console.error(err);
+    });
+    res.redirect("/");
   });
 
   // deletes appointment in db
