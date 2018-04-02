@@ -25,7 +25,6 @@ module.exports = app => {
 
   // adds new appointment to database
   app.post("/appointments", async (req, res) => {
-    console.log(req.body.userid);
     const appointment = new Appointment({
       name: req.body.name,
       phoneNumber: req.body.phoneNumber,
@@ -33,7 +32,17 @@ module.exports = app => {
       timeZone: req.body.timeZone,
       user: req.body.userid
     });
-    await appointment.save(err => {
+    // save appointment to db
+    appointment.save(err => {
+      if (err) console.error(err);
+    });
+    // finds current user
+    const currentUser = await User.findById( req.body.userid, (err) => {
+      if (err) console.error(err);
+    });
+    // adds appointment to user's list of appointments
+    currentUser.appointments.push(appointment);
+    currentUser.save(err => {
       if (err) console.error(err);
     });
     res.redirect("/");
