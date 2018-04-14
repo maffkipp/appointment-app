@@ -1,6 +1,22 @@
 const { User, Appointment } = require("../models/index");
+const moment = require('moment');
+const momentTimeZone = require('moment-timezone');
 
 module.exports = app => {
+
+  // return list of timezone names
+  const getTimeZones = function () {
+    return momentTimeZone.tz.names();
+  }
+
+  // render main page with user and timezone data
+  app.get("/", (req, res) => {
+    res.render("index.ejs", { 
+      user: req.user, 
+      timeZones: getTimeZones() 
+    });
+  });
+
   // gets list of appointments
   app.get("/appointments", async (req, res) => {
     const appointments = await Appointment.find();

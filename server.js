@@ -31,10 +31,6 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Server routes
-app.get("/", (req, res) => {
-  res.render("index.ejs", { user: req.user });
-});
-
 require("./routes/authRoutes")(app);
 require("./routes/twilioRoutes")(app);
 
