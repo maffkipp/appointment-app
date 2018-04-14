@@ -19,8 +19,12 @@
     </div>
     <div class="field">
         <label class="label">Time Zone</label>
-        <div class="control">
-            <input class="input" type="text" placeholder="Enter time zone" name="timeZone">
+        <div class="select">
+            <select>
+                <% timeZones.forEach(timeZone => { %>
+                    <option><%= timeZone %></option>
+                <% }); %>
+            </select>
         </div>
     </div>
     <div class="field">
